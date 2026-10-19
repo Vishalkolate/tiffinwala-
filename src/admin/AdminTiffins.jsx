@@ -4,6 +4,7 @@ import axios from "axios";
 import { Plus,  Search,  Pencil,  Trash2,
   X,  Utensils, Image as ImageIcon,  Loader2,  AlertCircle,  CheckCircle,  RefreshCw, } from "lucide-react";
 
+  
 const API_URL = "/api/admin/tiffins/";
 const MEDIA_URL = "http://127.0.0.1:8000";
 
@@ -665,7 +666,7 @@ export default function AdminTiffans() {
                     </p>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <label htmlFor="tiffin-image" className="mb-2 block text-sm font-semibold text-gray-700">
                       Image Upload
                     </label>
@@ -675,7 +676,7 @@ export default function AdminTiffans() {
                     <p className="mt-1 text-xs text-gray-500">
                       JPG, PNG किंवा WEBP. Maximum 5 MB.
                     </p>
-                  </div>
+                  </div> */}
 
                   {imagePreview && (
                     <div>

@@ -44,18 +44,22 @@ class Tiffin(models.Model):
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # Existing image URL fields preserved
+    # Tiffin image URL
     image = models.URLField(
         max_length=1000,
         blank=True,
         null=True,
     )
 
+    # Alternative image URL
     image_url = models.URLField(
         max_length=1000,
         blank=True,
         null=True,
     )
+
+    class Meta:
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.name
@@ -88,6 +92,9 @@ class Order(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"Order #{self.id} - {self.customer_name}"

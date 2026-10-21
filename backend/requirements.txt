@@ -1,8 +1,6 @@
-Django
+Django>=5.2,<5.3
 djangorestframework
 django-cors-headers
 Pillow
 gunicorn
 PyMySQL
-Django==6.1.2
-Django>=5.2,<5.3

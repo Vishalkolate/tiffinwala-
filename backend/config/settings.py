@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-2q-jl1+je*srw^ev55imn*7ou4cml6%&9yj!vb8a##p%dd!@+7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "tiffinwala-3vgn.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 MEDIA_URL = "/media/"
@@ -52,6 +56,10 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://tiffinwala-3vgn.onrender.com",
 ]
 
 REST_FRAMEWORK = {

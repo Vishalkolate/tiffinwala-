@@ -2,15 +2,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {
-  ShieldCheck,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  ArrowLeft,
-  Loader2,
-} from "lucide-react";
+import {  ShieldCheck,  Mail,  Lock,  Eye,  EyeOff,  ArrowLeft,  Loader2,} from "lucide-react";
 
 const API = "/api/auth";
 
@@ -61,6 +53,7 @@ if (user.is_staff !== true && user.is_superuser !== true) {
 localStorage.setItem("admin-token", token);
 localStorage.setItem("admin-user", JSON.stringify(user));
 
+
 navigate("/admin-dashboard", { replace: true });
         
     } catch (err) {
@@ -80,8 +73,7 @@ navigate("/admin-dashboard", { replace: true });
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-10">
       <div className="w-full max-w-md">
-        <Link
-          to="/"
+        <Link  to="/"
           className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-orange-600"
         >
           <ArrowLeft size={18} />

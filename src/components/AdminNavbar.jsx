@@ -78,10 +78,7 @@ export default function AdminNavbar({
       <div className="flex items-center gap-3">
 
         {/* Mobile Sidebar Button */}
-        <button
-          type="button"
-          onClick={onMenuClick}
-          aria-label="Open sidebar"
+        <button type="button" onClick={onMenuClick}  aria-label="Open sidebar"
           className="rounded-xl border border-gray-200 p-2.5 text-gray-600 hover:bg-orange-50 hover:text-orange-600 lg:hidden"
         >
           <Menu size={22} />

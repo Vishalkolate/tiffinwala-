@@ -66,8 +66,7 @@ export default function About() {
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {features.map(({ icon: Icon, title, text }) => (
-            <article
-              key={title}
+            <article  key={title}
               className="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm"
             >
               <Icon size={30} className="text-orange-600" />

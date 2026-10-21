@@ -13,6 +13,7 @@ export default function AdminRoute() {
     user = null;
   }
 
+  
   if (!token || !user) {
     return <Navigate to="/admin-login" replace />;
   }

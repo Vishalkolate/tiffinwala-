@@ -188,8 +188,7 @@ export default function Checkout() {
         <div className="w-full max-w-lg rounded-3xl bg-white p-8 text-center shadow-xl">
           <CheckCircle
             className="mx-auto text-green-600"
-            size={64}
-          />
+            size={64}/>
 
           <h1 className="mt-5 text-3xl font-black text-gray-900">
             Order Placed!
@@ -270,8 +269,7 @@ export default function Checkout() {
           Add some delicious tiffins before checkout.
         </p>
 
-        <Link
-          to="/menu"
+        <Link  to="/menu"
           className="mt-6 inline-block rounded-xl bg-orange-600 px-6 py-3 font-bold text-white hover:bg-orange-700"
         >
           Explore Menu
@@ -297,87 +295,55 @@ export default function Checkout() {
             Enter your details for delivery.
           </p>
 
-          <form
-            onSubmit={handleSubmit}
+          <form  onSubmit={handleSubmit}
             className="mt-8 space-y-5"
           >
             <div>
-              <label
-                htmlFor="customer_name"
+              <label htmlFor="customer_name"
                 className="mb-2 block text-sm font-bold text-gray-700"
-              >
-                Full Name
-              </label>
+              > Full Name </label>
 
-              <input
-                id="customer_name"
-                name="customer_name"
-                value={form.customer_name}
-                onChange={handleChange}
-                required
-                maxLength={150}
-                autoComplete="name"
-                placeholder="Enter your full name"
+              <input  id="customer_name" name="customer_name" value={form.customer_name} onChange={handleChange}
+                required  maxLength={150} autoComplete="name" placeholder="Enter your full name"
                 className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="phone"
+              <label  htmlFor="phone"
                 className="mb-2 block text-sm font-bold text-gray-700"
               >
                 Mobile Number
               </label>
 
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={form.phone}
-                onChange={handleChange}
-                required
-                maxLength={20}
-                autoComplete="tel"
-                placeholder="Enter your phone number"
+              <input id="phone" name="phone"  type="tel" value={form.phone} onChange={handleChange}
+                required  maxLength={20} autoComplete="tel" placeholder="Enter your phone number"
                 className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="address"
+              <label  htmlFor="address"
                 className="mb-2 block text-sm font-bold text-gray-700"
               >
                 Delivery Address
               </label>
 
-              <textarea
-                id="address"
-                name="address"
-                value={form.address}
-                onChange={handleChange}
-                required
-                maxLength={2000}
-                rows={4}
-                autoComplete="street-address"
-                placeholder="House number, street, area, city, PIN code"
+              <textarea id="address" name="address" value={form.address}  onChange={handleChange}
+                required maxLength={2000} rows={4} autoComplete="street-address" placeholder="House number, street, area, city, PIN code"
                 className="w-full resize-y rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
               />
             </div>
 
             {error && (
-              <div
-                role="alert"
+              <div role="alert"
                 className="break-words rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
               >
                 {error}
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={loading || cartItems.length === 0}
+            <button  type="submit"  disabled={loading || cartItems.length === 0}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-5 py-4 font-extrabold text-white shadow-md shadow-orange-200 transition hover:-translate-y-0.5 hover:from-orange-600 hover:to-red-500 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? (
@@ -407,8 +373,7 @@ export default function Checkout() {
 
           <div className="mt-5 space-y-4">
             {cartItems.map((item, index) => (
-              <div
-                key={item.id ?? index}
+              <div key={item.id ?? index}
                 className="flex items-start justify-between gap-4 border-b border-gray-100 pb-4"
               >
                 <div>

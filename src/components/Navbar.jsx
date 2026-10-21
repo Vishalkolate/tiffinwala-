@@ -185,9 +185,7 @@ export default function Navbar() {
 
               return (
                 <NavLink key={item.path}  to={item.path}  end={item.path === "/"}
-                  title={collapsed ? item.name : undefined}
-                  className={linkClass}
-                  onClick={closeSidebar}
+                  title={collapsed ? item.name : undefined}  className={linkClass} onClick={closeSidebar}
                 >
                   <Icon size={21} className="shrink-0" />
                   {!collapsed && <span>{item.name}</span>}
@@ -218,11 +216,8 @@ export default function Navbar() {
                 </NavLink>
 
                 {/* My Orders - Profile च्या खाली */}
-                <NavLink
-                  to="/my-orders"
-                  title={collapsed ? "My Orders" : undefined}
-                  className={linkClass}
-                  onClick={closeSidebar}
+                <NavLink to="/my-orders" title={collapsed ? "My Orders" : undefined}
+                  className={linkClass} onClick={closeSidebar}
                 >
                   <Package size={21} className="shrink-0" />
                   {!collapsed && <span>My Orders</span>}
@@ -233,7 +228,8 @@ export default function Navbar() {
                 {/* Login */}
                 <NavLink  to="/login"
                   title={collapsed ? "Login" : undefined}  className={linkClass}
-                  onClick={closeSidebar}  >
+                  onClick={closeSidebar} >
+
                   <LogIn size={21} className="shrink-0" />
                   {!collapsed && <span>Login</span>}
                 </NavLink>
@@ -289,15 +285,13 @@ export default function Navbar() {
                {userName}
               </p>
 
-                <p className="text-xs text-gray-500">
-               Logged in
-                </p>
+                <p className="text-xs text-gray-500"> Logged in </p>
                 </div>
                 )}
               </Link>
 
               {/* Logout */}
-              <button  type="button"   onClick={handleLogout}
+              <button  type="button"  onClick={handleLogout}
                 title={collapsed ? "Logout" : undefined}
                 className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50" >
                 <LogOut size={21} className="shrink-0" />
@@ -309,8 +303,7 @@ export default function Navbar() {
       </aside>
 
       {/* Top Navbar */}
-      <header
-        className={`fixed right-0 top-0 z-50 h-[72px] border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur transition-all duration-300 ${
+      <header className={`fixed right-0 top-0 z-50 h-[72px] border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur transition-all duration-300 ${
           collapsed ? "md:left-20" : "md:left-64"
         } left-0`}
       >
@@ -352,17 +345,16 @@ export default function Navbar() {
           </div>
 
           {/* Search */}
-          <form
-            onSubmit={handleSearch}
+          <form onSubmit={handleSearch}
             className="mx-1 flex max-w-md flex-1 items-center rounded-xl border border-gray-200 bg-gray-50 px-3 transition focus-within:border-orange-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-orange-100"
           >
             <Search size={19} className="shrink-0 text-gray-400" />
 
-            <input  type="search"  value={searchText}
+            <input type="search"  value={searchText}
               onChange={(event) => setSearchText(event.target.value)} placeholder="Search tiffin, thali..."  aria-label="Search menu"
               className="w-full min-w-0 bg-transparent px-3 py-2.5 text-sm text-gray-700 outline-none placeholder:text-gray-400" />
 
-            <button  type="submit"
+            <button type="submit"
               className="hidden rounded-lg bg-orange-500 px-3 py-2 text-xs font-bold text-white transition hover:bg-orange-600 sm:block"
             >
               Search
@@ -371,9 +363,7 @@ export default function Navbar() {
 
           {/* Right Actions */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <Link
-              to="/cart"
-              aria-label={`Shopping cart, ${cartCount} items`}
+            <Link to="/cart" aria-label={`Shopping cart, ${cartCount} items`}
               className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-orange-100 text-gray-700 transition hover:bg-orange-50 hover:text-orange-600 sm:h-11 sm:w-11"
             >
               <ShoppingBag size={22} />
@@ -386,7 +376,7 @@ export default function Navbar() {
             </Link>
 
             {loggedInUser ? (
-              <Link  to="/profile"   aria-label="My Profile"  title={userName}
+              <Link  to="/profile" aria-label="My Profile" title={userName}
                 className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-orange-200 bg-orange-500 text-white transition hover:border-orange-600 sm:h-11 sm:w-11"
               >
                 <UserRound size={22} />
@@ -400,7 +390,7 @@ export default function Navbar() {
                   <span>Login</span>
                 </Link>
 
-                <Link   to="/signup" aria-label="Sign Up"  title="Sign Up"
+                <Link to="/signup" aria-label="Sign Up"  title="Sign Up"
                   className="hidden items-center gap-1.5 rounded-lg bg-orange-500 px-3 py-2 text-sm font-bold text-white transition hover:bg-orange-600 sm:inline-flex"
                 >
                   <UserPlus size={17} />

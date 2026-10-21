@@ -1,14 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Clock,
-  Heart,
-  Leaf,
-  ShieldCheck,
-  Utensils,
-  Truck,
-} from "lucide-react";
+import {  ArrowRight,  Clock,  Heart,  Leaf,  ShieldCheck,  Utensils,  Truck,} from "lucide-react";
 
 const specials = [
   {
@@ -88,11 +80,8 @@ export default function Home() {
           </div>
 
           <div className="relative mx-auto w-full max-w-lg">
-            <img
-              src="https://images.openai.com/static-rsc-4/1VhWf0K5Nqzh9QnWtnpYoMf0IwbJvSzYXUQoRihzfYM1JIeTZLYxIijbo5HrhNoasJuc-ynLV-FQhsWyYMtEnYZvG_X0sOFhghvCY-GxRGTn8NlNOCA77GLEYxHEWtCgPGY3OFeAg95kLJNl_QqFLMP8CS2XNO9mrj8BMAZKDCLsfr6Bk0-rLFL0hAuPS4wJ?purpose=fullsize"
-              alt="Fresh Indian thali"
-              className="h-56 w-full rounded-2xl object-cover shadow-xl sm:h-72 lg:h-80"
-            />
+            <img src="https://images.openai.com/static-rsc-4/1VhWf0K5Nqzh9QnWtnpYoMf0IwbJvSzYXUQoRihzfYM1JIeTZLYxIijbo5HrhNoasJuc-ynLV-FQhsWyYMtEnYZvG_X0sOFhghvCY-GxRGTn8NlNOCA77GLEYxHEWtCgPGY3OFeAg95kLJNl_QqFLMP8CS2XNO9mrj8BMAZKDCLsfr6Bk0-rLFL0hAuPS4wJ?purpose=fullsize"
+              alt="Fresh Indian thali" className="h-56 w-full rounded-2xl object-cover shadow-xl sm:h-72 lg:h-80"/>
 
             <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 rounded-xl bg-white/95 p-3 shadow-lg sm:bottom-4 sm:left-4 sm:right-4 sm:p-4">
               <div>
@@ -226,8 +215,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Link
-            to="/menu"
+          <Link  to="/menu"
             className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-orange-700 transition hover:bg-orange-50"
           > Explore Menu
             <ArrowRight size={18} />

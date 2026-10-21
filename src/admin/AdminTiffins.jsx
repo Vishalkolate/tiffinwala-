@@ -1,10 +1,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Plus,  Search,  Pencil,  Trash2,
-  X,  Utensils, Image as ImageIcon,  Loader2,  AlertCircle,  CheckCircle,  RefreshCw, } from "lucide-react";
+import {
+  Plus, Search, Pencil, Trash2,
+  X, Utensils, Image as ImageIcon, Loader2, AlertCircle, CheckCircle, RefreshCw,
+} from "lucide-react";
 
-  
+
 const API_URL = "/api/admin/tiffins/";
 const MEDIA_URL = "http://127.0.0.1:8000";
 
@@ -97,7 +99,7 @@ function getErrorMessage(err, fallback) {
         const message = Array.isArray(value)
           ? value.join(", ")
           : typeof value === "string"
-          ? value
+            ? value
             : JSON.stringify(value);
 
         return `${field}: ${message}`;
@@ -384,13 +386,11 @@ export default function AdminTiffans() {
               Tiffin Management
             </h1>
             <p className="mt-1 text-sm text-gray-500">
-              Add, edit आणि manage your tiffins
+              Add, edit and manage your tiffins
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={openAddForm}
+          <button type="button" onClick={openAddForm}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 px-5 py-3 font-semibold text-white transition hover:bg-orange-700"
           >
             <Plus size={20} />
@@ -402,11 +402,8 @@ export default function AdminTiffans() {
           <div className="mb-5 flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 p-4 text-green-700">
             <CheckCircle size={20} />
             <span>{message}</span>
-            <button
-              type="button"
-              onClick={() => setMessage("")}
-              className="ml-auto"
-              aria-label="Dismiss message"
+            <button type="button" onClick={() => setMessage("")}
+              className="ml-auto" aria-label="Dismiss message"
             >
               <X size={18} />
             </button>
@@ -414,17 +411,13 @@ export default function AdminTiffans() {
         )}
 
         {error && !showForm && (
-          <div
-            role="alert"
+          <div role="alert"
             className="mb-5 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700"
           >
             <AlertCircle size={20} />
             <span>{error}</span>
-            <button
-              type="button"
-              onClick={() => setError("")}
-              className="ml-auto"
-              aria-label="Dismiss error"
+            <button type="button" onClick={() => setError("")}
+              className="ml-auto" aria-label="Dismiss error"
             >
               <X size={18} />
             </button>
@@ -437,12 +430,12 @@ export default function AdminTiffans() {
               size={20}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
-            <input type="search"  value={search}  onChange={(event) => setSearch(event.target.value)} placeholder="Search tiffins..."  aria-label="Search tiffins"
+            <input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search tiffins..." aria-label="Search tiffins"
               className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-10 pr-4 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
             />
           </div>
 
-          <button  type="button"  onClick={fetchTiffins} disabled={loading}
+          <button type="button" onClick={fetchTiffins} disabled={loading}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 font-semibold text-gray-700 hover:bg-gray-100 disabled:opacity-50"
           >
             <RefreshCw size={17} className={loading ? "animate-spin" : ""} />
@@ -500,9 +493,7 @@ export default function AdminTiffans() {
                         <td className="px-5 py-4">
                           <div className="flex items-center gap-3">
                             {tiffinImage ? (
-                              <img
-                                src={tiffinImage}
-                                alt={item.name || "Tiffin"}
+                              <img src={tiffinImage} alt={item.name || "Tiffin"}
                                 className="h-14 w-14 rounded-xl border border-gray-200 object-cover"
                                 onError={(event) => {
                                   event.currentTarget.style.display = "none";
@@ -552,7 +543,7 @@ export default function AdminTiffans() {
                               <Pencil size={18} />
                             </button>
 
-                            <button type="button" onClick={() => handleDelete(item)}   disabled={deletingId === item.id}  title="Delete Tiffin" aria-label={`Delete ${item.name}`}
+                            <button type="button" onClick={() => handleDelete(item)} disabled={deletingId === item.id} title="Delete Tiffin" aria-label={`Delete ${item.name}`}
                               className="rounded-lg border border-gray-200 p-2 text-red-600 hover:bg-red-50 disabled:opacity-50" >
                               {deletingId === item.id ? (
                                 <Loader2 size={18} className="animate-spin" />
@@ -586,8 +577,8 @@ export default function AdminTiffans() {
                   <p className="mt-1 text-sm text-gray-500">Tiffin details भरा</p>
                 </div>
 
-                <button  type="button"
-                  onClick={closeForm} disabled={saving}  className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+                <button type="button"
+                  onClick={closeForm} disabled={saving} className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 disabled:opacity-50"
                   aria-label="Close form"
                 >
                   <X size={22} />
@@ -610,7 +601,7 @@ export default function AdminTiffans() {
                     <label htmlFor="tiffin-name" className="mb-2 block text-sm font-semibold text-gray-700">
                       Tiffin Name *
                     </label>
-                    <input  id="tiffin-name" type="text" name="name"  value={form.name}  onChange={handleChange} required placeholder="Special Veg Thali"
+                    <input id="tiffin-name" type="text" name="name" value={form.name} onChange={handleChange} required placeholder="Special Veg Thali"
                       className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
                     />
                   </div>
@@ -620,7 +611,7 @@ export default function AdminTiffans() {
                       Description *
                     </label>
                     <textarea
-                      id="tiffin-description" name="description" value={form.description} onChange={handleChange}  required  rows={3}  placeholder="Tiffin मध्ये काय काय आहे ते लिहा"
+                      id="tiffin-description" name="description" value={form.description} onChange={handleChange} required rows={3} placeholder="Tiffin मध्ये काय काय आहे ते लिहा"
                       className="w-full resize-y rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
                     />
                   </div>
@@ -640,16 +631,13 @@ export default function AdminTiffans() {
                       <label htmlFor="tiffin-category" className="mb-2 block text-sm font-semibold text-gray-700">
                         Category *
                       </label>
-                      <select  id="tiffin-category"  name="category"
+                      <select id="tiffin-category" name="category"
                         value={form.category} onChange={handleChange} required
                         className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
                       >
                         <option value="Veg Thali">Veg Thali</option>
                         <option value="Special Thali">Special Thali</option>
-                        <option value="Non Veg Thali">Non Veg Thali</option>
                         <option value="Mini Thali">Mini Thali</option>
-                        <option value="Combo">Combo</option>
-                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>
@@ -658,11 +646,11 @@ export default function AdminTiffans() {
                     <label htmlFor="tiffin-image-url" className="mb-2 block text-sm font-semibold text-gray-700">
                       Image URL
                     </label>
-                    <input  id="tiffin-image-url"  type="url"  value={imageUrl} onChange={handleImageUrlChange} placeholder="https://example.com/veg-thali.jpg"
+                    <input id="tiffin-image-url" type="url" value={imageUrl} onChange={handleImageUrlChange} placeholder="https://example.com/veg-thali.jpg"
                       className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
                     />
                     <p className="mt-1 text-xs text-gray-500">
-                      Direct image URL paste करा किंवा खाली image upload करा.
+                      Direct image URL paste
                     </p>
                   </div>
 
@@ -696,11 +684,11 @@ export default function AdminTiffans() {
                   )}
 
                   <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-4">
-                    <input  type="checkbox"  name="is_available" checked={form.is_available}  onChange={handleChange}
+                    <input type="checkbox" name="is_available" checked={form.is_available} onChange={handleChange}
                       className="h-5 w-5 accent-orange-600"
                     />
                     <div>
-                      <p className="font-semibold text-gray-800">Tiffin Available आहे</p>
+                      <p className="font-semibold text-gray-800">Tiffin Available </p>
                       <p className="text-xs text-gray-500">
                         Customer ला हा tiffin order करता येईल.
                       </p>
@@ -709,21 +697,21 @@ export default function AdminTiffans() {
                 </div>
 
                 <div className="flex flex-col-reverse gap-3 border-t border-gray-100 px-6 py-5 sm:flex-row sm:justify-end">
-                  <button  type="button"  onClick={closeForm} disabled={saving}
+                  <button type="button" onClick={closeForm} disabled={saving}
                     className="rounded-xl border border-gray-200 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50"
                   >
                     Cancel
                   </button>
 
-                  <button  type="submit"  disabled={saving}
+                  <button type="submit" disabled={saving}
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 px-5 py-3 font-semibold text-white hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {saving && <Loader2 size={18} className="animate-spin" />}
                     {saving
                       ? "Saving..."
                       : editingId !== null
-                      ? "Update Tiffin"
-                      : "Add Tiffin"}
+                        ? "Update Tiffin"
+                        : "Add Tiffin"}
                   </button>
                 </div>
               </form>

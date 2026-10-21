@@ -36,9 +36,7 @@ function Profile() {
   const firstLetter =
     userName.trim().charAt(0).toUpperCase() || "U";
 
-  // =========================
   // GET PROFILE
-  // =========================
   const axiosProfile = useCallback(async () => {
     const savedToken = localStorage.getItem("tiffin-token");
 
@@ -121,9 +119,8 @@ function Profile() {
     axiosProfile();
   }, [axiosProfile]);
 
-  // =========================
   // LOGOUT
-  // =========================
+
   const handleLogout = async () => {
     const savedToken = localStorage.getItem("tiffin-token");
 
@@ -165,9 +162,8 @@ function Profile() {
     }
   };
 
-  // =========================
   // LOGIN REQUIRED
-  // =========================
+
   if (!token) {
     return (
       <div className="flex min-h-[75vh] items-center justify-center bg-[#fff8f1] px-4 py-10">
@@ -185,8 +181,7 @@ function Profile() {
             manage your account and view your orders.
           </p>
 
-          <Link
-            to="/login"
+          <Link  to="/login"
             className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 px-6 py-3.5 font-bold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600"
           >
             <LogIn size={19} />
@@ -194,8 +189,7 @@ function Profile() {
             <ChevronRight size={18} />
           </Link>
 
-          <Link
-            to="/"
+          <Link  to="/"
             className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gray-500 transition hover:text-orange-600"
           >
             <House size={16} />
@@ -206,9 +200,8 @@ function Profile() {
     );
   }
 
-  // =========================
   // PROFILE PAGE
-  // =========================
+
   return (
     <div className="min-h-screen bg-[#fff8f1] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">

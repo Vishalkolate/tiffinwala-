@@ -1,10 +1,6 @@
 
 import { useEffect, useState } from "react";
-import {
-  ShoppingCart,
-  RefreshCw,
-  Utensils,
-} from "lucide-react";
+import { ShoppingCart, RefreshCw, Utensils, } from "lucide-react";
 import { useCart } from "../context/CartContext.jsx";
 import axios from "axios";
 
@@ -131,7 +127,7 @@ export default function Menu() {
             {error}
           </p>
 
-          <button  type="button" onClick={() => window.location.reload()}
+          <button type="button" onClick={() => window.location.reload()}
             className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-200"
           >
             <RefreshCw size={18} />
@@ -194,19 +190,20 @@ export default function Menu() {
                 >
                   {/* Food Image */}
                   <div className="relative h-48 overflow-hidden bg-orange-50 sm:h-52">
-                    {dish.image ? (
+                    {dish.image || dish.image_url ? (
                       <img
-                        src={dish.image}
+                        src={dish.image || dish.image_url}
                         alt={dish.name || "Homemade tiffin"}
                         loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(event) => {
+                          console.error("Image loading failed:", event.currentTarget.src);
                           event.currentTarget.style.display = "none";
                         }}
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center text-7xl">
-                        🍛
+                        🍱
                       </div>
                     )}
 
@@ -245,10 +242,7 @@ export default function Menu() {
                     </p>
 
                     {/* Order Now Button */}
-                    <button
-                      type="button"
-                      disabled={!isAvailable}
-                      onClick={() => handleAddToCart(dish)}
+                    <button type="button" disabled={!isAvailable} onClick={() => handleAddToCart(dish)}
                       className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-orange-50 px-4 py-3 text-sm font-bold text-orange-700 transition-all duration-200 hover:bg-orange-100 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-orange-300 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
                     >
                       {wasAdded ? (

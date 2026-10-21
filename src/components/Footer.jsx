@@ -1,14 +1,6 @@
 
 import { Link } from "react-router-dom";
-import {
-  UtensilsCrossed,
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
-  ArrowRight,
-  Heart,
-} from "lucide-react";
+import {  UtensilsCrossed,  MapPin,  Phone,  Mail,  Clock,  ArrowRight,  Heart,} from "lucide-react";
 
 export default function Footer() {
   return (
@@ -165,8 +157,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <Link
-            to="/menu"
+          <Link  to="/menu"
             className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-orange-600"
           >
             Explore Menu

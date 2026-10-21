@@ -107,7 +107,7 @@ DATABASES = {
         "NAME": "bw731hmg3c45t7bb5nzk",
         "USER": "u4eknl8ria5sdskf",
         "PASSWORD": "9ChkFxVWOdbqpUDUYtMn",
-        "HOST": "127.0.0.1",
+        "HOST": "bw731hmg3c45t7bb5nzk-mysql.services.clever-cloud.com",
         "PORT": "3306",
         "OPTIONS": {
             "charset": "utf8mb4",

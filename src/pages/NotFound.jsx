@@ -12,8 +12,7 @@ export default function NotFound() {
         <p className="mt-3 text-gray-600">
           Sorry, we couldn't find the page you're looking for.
         </p>
-        <Link
-          to="/"
+        <Link  to="/"
           className="mt-7 inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 font-bold text-white hover:bg-orange-700"
         >
           <ArrowLeft size={18} /> Back to Home

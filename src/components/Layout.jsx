@@ -7,6 +7,7 @@ export default function Layout() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
+
       {/* Main content starts after the sidebar and topbar */}
       <div className="mt-0 ml-0 min-w-0 md:ml-64">
         <main className="min-w-0 md:pt-[72px]">

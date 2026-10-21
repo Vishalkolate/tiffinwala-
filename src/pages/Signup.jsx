@@ -328,8 +328,8 @@ export default function Signup() {
                       ? "Hide confirm password"
                       : "Show confirm password"
                   }
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-                >
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    
                   {showConfirmPassword ? (
                     <EyeOff size={19} />
                   ) : (
@@ -353,9 +353,7 @@ export default function Signup() {
             <Link
               to="/login"
               className="font-semibold text-orange-600 hover:text-orange-700"
-            >
-              Login
-            </Link>
+            >  Login </Link>
           </p>
         </div>
       </div>

@@ -400,8 +400,7 @@ function MyOrder() {
         <div className="mb-8 rounded-3xl bg-gradient-to-r from-orange-500 to-orange-400 p-6 text-white shadow-lg sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-5">
             <div>
-              <Link
-                to="/profile"
+              <Link  to="/profile"
                 className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-orange-50 transition hover:text-white"
               >
                 <ArrowLeft size={16} />
@@ -493,8 +492,7 @@ function MyOrder() {
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link
-                to="/menu"
+              <Link to="/menu"
                 className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-3 font-bold text-white transition hover:bg-orange-600"
               >
                 <Utensils size={18} />
@@ -580,15 +578,11 @@ function MyOrder() {
                             const image = getItemImage(item);
 
                             return (
-                              <div
-                                key={item.id ?? itemIndex}
+                              <div  key={item.id ?? itemIndex}
                                 className="flex items-center gap-4 rounded-2xl border border-gray-100 bg-gray-50/80 p-3 transition hover:border-orange-200"
                               >
                                 {image ? (
-                                  <img
-                                    src={image}
-                                    alt={getItemName(item)}
-                                    loading="lazy"
+                                  <img src={image}  alt={getItemName(item)} loading="lazy"
                                     onError={(event) => {
                                       event.currentTarget.style.display = "none";
                                     }}
@@ -681,10 +675,7 @@ function MyOrder() {
 
                       {/* Cancel button */}
                       {canCancel && (
-                        <button
-                          type="button"
-                          onClick={() => cancelOrder(order)}
-                          disabled={cancelLoading === orderId}
+                        <button type="button" onClick={() => cancelOrder(order)} disabled={cancelLoading === orderId}
                           className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-5 py-3 font-bold text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           {cancelLoading === orderId ? (
@@ -726,8 +717,7 @@ function MyOrder() {
         {/* Bottom button */}
         {!loading && orders.length > 0 && (
           <div className="mt-8 text-center">
-            <Link
-              to="/menu"
+            <Link  to="/menu"
               className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-6 py-3 font-bold text-white shadow-sm transition hover:bg-orange-600"
             >
               <Utensils size={18} />

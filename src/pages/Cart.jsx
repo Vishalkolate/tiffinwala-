@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
-import {
-  Plus,
-  Minus,
-  Trash2,
-  ShoppingBag,
-  ArrowLeft,
-} from "lucide-react";
+import {  Plus,  Minus,  Trash2,  ShoppingBag,  ArrowLeft,} from "lucide-react";
 
 export default function Cart() {
   const { cartItems = [], updateQuantity, removeFromCart, clearCart,} = useCart();
@@ -91,8 +85,7 @@ export default function Cart() {
                 const itemKey = item.id ?? item.name;
 
                 return (
-                  <article
-                    key={itemKey}
+                  <article  key={itemKey}
                     className="flex flex-col gap-4 rounded-2xl border border-orange-100 bg-white p-4 shadow-sm sm:flex-row sm:items-center"
                   >
                     {item.image || item.img ? (
@@ -115,9 +108,7 @@ export default function Cart() {
 
                       <div className="mt-4 flex flex-wrap items-center gap-3">
                         <div className="flex items-center rounded-lg border border-gray-200">
-                          <button
-                            type="button"
-                            onClick={() =>
+                          <button  type="button" onClick={() =>
                               updateQuantity(itemKey, quantity - 1)
                             }
                             aria-label="Decrease quantity"
@@ -193,8 +184,7 @@ export default function Cart() {
                 </span>
               </div>
 
-              <Link to="/checkout"
-                state={{ cartTotal }}
+              <Link to="/checkout" state={{ cartTotal }}
                 className="mt-5 block w-full rounded-xl bg-orange-600 px-5 py-3 text-center font-bold text-white transition hover:bg-orange-700"
               > Proceed to Checkout </Link>
 

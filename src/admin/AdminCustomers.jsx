@@ -153,8 +153,7 @@ export default function AdminCustomers() {
 
       {/* Error */}
       {error && (
-        <div
-          role="alert"
+        <div  role="alert"
           className="mx-5 mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
         >
           <p className="font-semibold">{error}</p>

@@ -1,14 +1,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import {
-  RefreshCw,
-  Search,
-  Utensils,
-  Image as ImageIcon,
-  Loader2,
-  AlertCircle,
-} from "lucide-react";
+import { RefreshCw,  Search,  Utensils,  Image as ImageIcon,  Loader2,  AlertCircle,} from "lucide-react";
 
 const API_URL = "/api/admin/orders/";
 const MEDIA_URL = "http://127.0.0.1:8000";
@@ -266,9 +259,7 @@ export default function AdminOrders() {
             placeholder="Search order ID, customer, phone or tiffin" className="w-full py-3 text-sm outline-none"  />
         </div>
 
-        <select
-          value={statusFilter}
-          onChange={(event) => setStatusFilter(event.target.value)}
+        <select  value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}
           className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-orange-500"
         >
           <option value="All">All Statuses</option>
@@ -318,8 +309,7 @@ export default function AdminOrders() {
                 const orderItems = getOrderItems(order);
 
                 return (
-                  <tr
-                    key={order.id}
+                  <tr key={order.id}
                     className="transition hover:bg-orange-50/40"
                   >
                     <td className="px-5 py-4 font-bold text-orange-600">

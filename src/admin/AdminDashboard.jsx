@@ -258,10 +258,7 @@ export default function AdminDashboard() {
 
       {/* Mobile Sidebar Background */}
       {sidebarOpen && (
-        <button
-          type="button"
-          aria-label="Close sidebar"
-          onClick={() => setSidebarOpen(false)}
+        <button  type="button"  aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}
           className="fixed inset-0 z-40 bg-black/40 lg:hidden"
         />
       )}
@@ -507,8 +504,7 @@ export default function AdminDashboard() {
             <button type="button"  onClick={loadDashboard} disabled={loading}
               className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 hover:bg-gray-100 disabled:opacity-50"
             >
-              <RefreshCw
-                size={17}
+              <RefreshCw size={17}
                 className={loading ? "animate-spin" : ""}
               />
               Refresh
@@ -521,8 +517,7 @@ export default function AdminDashboard() {
               const Icon = card.icon;
 
               return (
-                <div
-                  key={card.title}
+                <div  key={card.title}
                   className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
                 >
                   <div className="flex items-center justify-between">
@@ -588,9 +583,7 @@ export default function AdminDashboard() {
                 const Icon = action.icon;
 
                 return (
-                  <NavLink
-                    key={action.path}
-                    to={action.path}
+                  <NavLink  key={action.path} to={action.path}
                     className="group flex items-center justify-between gap-4 rounded-xl border border-gray-200 p-4 transition hover:border-orange-300 hover:bg-orange-50/40"
                   >
                     <div className="flex min-w-0 items-center gap-3">
@@ -619,7 +612,6 @@ export default function AdminDashboard() {
               
              );
 })}
-
             </div>
           </section>
 

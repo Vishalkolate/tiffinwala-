@@ -1,14 +1,6 @@
 
 import { NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  ShoppingBag,
-  Utensils,
-  Users,
-  ChefHat,
-  House,
-  X,
-} from "lucide-react";
+import {  LayoutDashboard,  ShoppingBag,  Utensils,  Users,  ChefHat,  House,  X,} from "lucide-react";
 
 const menuItems = [
   {
@@ -107,9 +99,7 @@ export default function AdminSidebar({
 
         {/* Bottom - View Website */}
         <div className="border-t border-gray-200 p-4">
-          <NavLink
-            to="/"
-            onClick={onClose}
+          <NavLink to="/" onClick={onClose}
             className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-600 hover:bg-gray-100"
           >
             <House size={20} />

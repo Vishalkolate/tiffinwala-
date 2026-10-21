@@ -48,8 +48,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
+          <form onSubmit={handleSubmit}
             className="rounded-2xl border border-orange-100 bg-white p-8 shadow-sm"
           >
             <h2 className="text-2xl font-bold text-gray-900">

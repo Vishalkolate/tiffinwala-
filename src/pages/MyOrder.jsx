@@ -1,7 +1,20 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {  Package,  CalendarDays,  MapPin,  CreditCard,  Clock,  ShoppingBag,  RefreshCw,  ArrowLeft,  Utensils,  CheckCircle2,  XCircle,  Truck,} from "lucide-react";
+import {
+  Package,
+  CalendarDays,
+  MapPin,
+  CreditCard,
+  Clock,
+  ShoppingBag,
+  RefreshCw,
+  ArrowLeft,
+  Utensils,
+  CheckCircle2,
+  XCircle,
+  Truck,
+} from "lucide-react";
 import axios from "axios";
 
 const API = "/api";
@@ -103,6 +116,7 @@ const getItemName = (item) =>
   item?.product_name ||
   item?.name ||
   item?.tiffin?.name ||
+  item?.product?.name ||
   "Tiffin Item";
 
 // Item image
@@ -110,32 +124,54 @@ const getItemImage = (item) => {
   const image =
     item?.image ||
     item?.image_url ||
-    item?.tiffin_image ||
+    item?.tiff_image ||
+    item?.tiff_image_url ||
     item?.product_image ||
-    item?.tiffin?.image ||
-    item?.tiffin?.image_url ||
+    item?.product_image_url ||
+    item?.image_path ||
+    item?.tiff?.image ||
+    item?.tiff?.image_url ||
+    item?.tiff?.image_path ||
+    item?.product?.image ||
+    item?.product?.image_url ||
     "";
 
-  if (typeof image !== "string" || !image.trim()) {
+  // Image URL is missing
+  if (!image) {
     return "";
   }
 
-  if (/^https?:\/\//i.test(image)) {
-    return image;
+  // Handle string image URL
+  if (typeof image !== "string") {
+    return "";
   }
 
-  if (image.startsWith("//")) {
-    return `${window.location.protocol}${image}`;
+  const imageUrl = image.trim();
+
+  if (!imageUrl) {
+    return "";
   }
 
-  if (image.startsWith("/")) {
-    return image;
+  // Full URL
+  if (/^https?:\/\//i.test(imageUrl)) {
+    return imageUrl;
   }
 
-  return `/${image}`;
+  // Protocol-relative URL
+  if (imageUrl.startsWith("//")) {
+    return `${window.location.protocol}${imageUrl}`;
+  }
+
+  // Backend media path
+  if (imageUrl.startsWith("/")) {
+    return imageUrl;
+  }
+
+  // Relative path
+  return `/${imageUrl}`;
 };
 
-// Item price
+// Item subtotal
 const getItemSubtotal = (item) => {
   const quantity = Number(item?.quantity ?? item?.qty ?? 1);
   const subtotal = item?.subtotal;
@@ -151,7 +187,8 @@ const getItemSubtotal = (item) => {
   const price =
     item?.unit_price ??
     item?.price ??
-    item?.tiffin?.price;
+    item?.tiffin?.price ??
+    item?.product?.price;
 
   if (price === undefined || price === null || price === "") {
     return "Price unavailable";
@@ -206,17 +243,51 @@ const canCancelOrder = (order) => {
   return ["pending", "confirmed"].includes(status);
 };
 
+// Order item image component
+function OrderItemImage({ item }) {
+  const image = getItemImage(item);
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-orange-50 sm:h-28 sm:w-28">
+
+      {image && !imageError ? (
+        <img
+          src={image}
+          alt={getItemName(item)}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+          onError={(event) => {
+            console.error(
+              "Order image loading failed:",
+              event.currentTarget.src
+            );
+
+            setImageError(true);
+          }}
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center text-4xl">
+          🍱
+        </div>
+      )}
+
+    </div>
+  );
+}
+
 function MyOrder() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ordersMessage, setOrdersMessage] = useState("");
+
   const [cancelLoading, setCancelLoading] = useState(null);
   const [cancelMessage, setCancelMessage] = useState("");
   const [cancelMessageType, setCancelMessageType] = useState("");
 
   const token = localStorage.getItem("tiffin-token");
 
-  // Fetch logged-in user's orders using Axios
+  // Fetch logged-in user's orders
   const axiosOrders = useCallback(async () => {
     const savedToken = localStorage.getItem("tiffin-token");
 
@@ -252,6 +323,18 @@ function MyOrder() {
         throw new Error("Unexpected response from orders API.");
       }
 
+      // Debug order images
+      console.log("Orders API Response:", orderList);
+
+      orderList.forEach((order) => {
+        const items = getOrderItems(order);
+
+        items.forEach((item) => {
+          console.log("Item Name:", getItemName(item));
+          console.log("Item Image:", getItemImage(item));
+        });
+      });
+
       setOrders(orderList);
 
       setOrdersMessage(
@@ -274,7 +357,8 @@ function MyOrder() {
       if (status === 401 || status === 403) {
         message = "Your login session is invalid. Please log in again.";
       } else if (status === 404) {
-        message = "My Orders API was not found. Check Django URL configuration.";
+        message =
+          "My Orders API was not found. Check Django URL configuration.";
       }
 
       setOrdersMessage(message);
@@ -287,7 +371,7 @@ function MyOrder() {
     axiosOrders();
   }, [axiosOrders]);
 
-  // Cancel order using Axios
+  // Cancel order
   const cancelOrder = async (order) => {
     const orderId = order?.id ?? order?.order_id;
 
@@ -353,7 +437,8 @@ function MyOrder() {
       } else if (status === 403) {
         message = "You are not allowed to cancel this order.";
       } else if (status === 404) {
-        message = "Cancel API or order was not found. Check Django URLs.";
+        message =
+          "Cancel API or order was not found. Check Django URLs.";
       } else if (status === 400) {
         message = data?.detail || "This order cannot be cancelled.";
       }
@@ -370,6 +455,7 @@ function MyOrder() {
     return (
       <div className="flex min-h-[70vh] items-center justify-center bg-orange-50 px-4">
         <div className="w-full max-w-md rounded-3xl border border-orange-100 bg-white p-8 text-center shadow-xl">
+
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
             <ShoppingBag size={30} />
           </div>
@@ -388,6 +474,7 @@ function MyOrder() {
           >
             Go to Login
           </Link>
+
         </div>
       </div>
     );
@@ -395,12 +482,18 @@ function MyOrder() {
 
   return (
     <div className="min-h-screen bg-[#fffaf5] px-4 py-8 sm:px-6 lg:px-8">
+
       <div className="mx-auto max-w-6xl">
+
         {/* Header */}
         <div className="mb-8 rounded-3xl bg-gradient-to-r from-orange-500 to-orange-400 p-6 text-white shadow-lg sm:p-8">
+
           <div className="flex flex-wrap items-center justify-between gap-5">
+
             <div>
-              <Link  to="/profile"
+
+              <Link
+                to="/profile"
                 className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-orange-50 transition hover:text-white"
               >
                 <ArrowLeft size={16} />
@@ -414,20 +507,26 @@ function MyOrder() {
               <p className="mt-2 text-sm text-orange-50 sm:text-base">
                 Your meals, your orders, all in one place.
               </p>
+
             </div>
 
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm sm:h-20 sm:w-20">
               <Utensils size={38} />
             </div>
+
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
+
             <div className="rounded-xl bg-white/15 px-4 py-2 text-sm font-medium">
               {orders.length} {orders.length === 1 ? "Order" : "Orders"}
             </div>
 
-            <button type="button" onClick={axiosOrders}
-              disabled={loading} className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-orange-600 transition hover:bg-orange-50 disabled:opacity-60"
+            <button
+              type="button"
+              onClick={axiosOrders}
+              disabled={loading}
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-orange-600 transition hover:bg-orange-50 disabled:opacity-60"
             >
               <RefreshCw
                 size={16}
@@ -435,7 +534,9 @@ function MyOrder() {
               />
               Refresh Orders
             </button>
+
           </div>
+
         </div>
 
         {/* Success or error message */}
@@ -453,13 +554,17 @@ function MyOrder() {
               <XCircle size={20} className="mt-0.5 shrink-0" />
             )}
 
-            <p className="text-sm font-medium">{cancelMessage}</p>
+            <p className="text-sm font-medium">
+              {cancelMessage}
+            </p>
           </div>
         )}
 
         {/* Loading */}
         {loading ? (
+
           <div className="rounded-3xl border border-orange-100 bg-white p-12 text-center shadow-sm">
+
             <RefreshCw
               size={32}
               className="mx-auto animate-spin text-orange-500"
@@ -472,10 +577,14 @@ function MyOrder() {
             <p className="mt-2 text-sm text-gray-500">
               Please wait while we load your order history.
             </p>
+
           </div>
+
         ) : orders.length === 0 ? (
+
           // Empty state
           <div className="rounded-3xl border border-orange-100 bg-white px-6 py-14 text-center shadow-sm sm:px-12">
+
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-orange-100 text-orange-500">
               <ShoppingBag size={34} />
             </div>
@@ -492,7 +601,9 @@ function MyOrder() {
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link to="/menu"
+
+              <Link
+                to="/menu"
                 className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-3 font-bold text-white transition hover:bg-orange-600"
               >
                 <Utensils size={18} />
@@ -509,12 +620,18 @@ function MyOrder() {
                   Try Again
                 </button>
               )}
+
             </div>
+
           </div>
+
         ) : (
+
           // Orders list
           <div className="space-y-6">
+
             {orders.map((order, index) => {
+
               const orderId = order.id ?? order.order_id ?? index + 1;
 
               const status = order.status || order.order_status || "Pending";
@@ -524,18 +641,23 @@ function MyOrder() {
               const total = getOrderTotal(order);
 
               return (
+
                 <article
                   key={order.id ?? order.order_id ?? index}
                   className="overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-sm transition hover:shadow-md"
                 >
+
                   {/* Order card header */}
                   <div className="flex flex-col gap-4 border-b border-gray-100 bg-gradient-to-r from-white to-orange-50/60 p-5 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+
                     <div className="flex items-start gap-4">
+
                       <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
                         <Package size={26} />
                       </div>
 
                       <div>
+
                         <h2 className="text-xl font-extrabold text-gray-900">
                           Order #{orderId}
                         </h2>
@@ -543,10 +665,14 @@ function MyOrder() {
                         <p className="mt-2 flex items-center gap-2 text-sm text-gray-500">
                           <CalendarDays size={16} className="text-orange-500" />
                           {formatDate(
-                            order.created_at || order.order_date || order.date
+                            order.created_at ||
+                            order.order_date ||
+                            order.date
                           )}
                         </p>
+
                       </div>
+
                     </div>
 
                     <span
@@ -555,13 +681,17 @@ function MyOrder() {
                       <Clock size={15} />
                       {formatStatus(status)}
                     </span>
+
                   </div>
 
                   {/* Card body */}
                   <div className="grid gap-7 p-5 sm:p-7 lg:grid-cols-[1.15fr_0.85fr]">
-                    {/* Items */}
+
+                    {/* Ordered items */}
                     <section>
+
                       <div className="mb-4 flex items-center justify-between">
+
                         <h3 className="text-lg font-extrabold text-gray-900">
                           Ordered Items
                         </h3>
@@ -569,32 +699,30 @@ function MyOrder() {
                         <span className="rounded-lg bg-orange-50 px-3 py-1 text-xs font-bold text-orange-600">
                           {items.length} {items.length === 1 ? "Item" : "Items"}
                         </span>
+
                       </div>
 
                       {items.length > 0 ? (
+
                         <div className="space-y-3">
+
                           {items.map((item, itemIndex) => {
+
                             const quantity = item.quantity ?? item.qty ?? 1;
-                            const image = getItemImage(item);
 
                             return (
-                              <div  key={item.id ?? itemIndex}
+
+                              <div
+                                key={item.id ?? itemIndex}
                                 className="flex items-center gap-4 rounded-2xl border border-gray-100 bg-gray-50/80 p-3 transition hover:border-orange-200"
                               >
-                                {image ? (
-                                  <img src={image}  alt={getItemName(item)} loading="lazy"
-                                    onError={(event) => {
-                                      event.currentTarget.style.display = "none";
-                                    }}
-                                    className="h-20 w-20 shrink-0 rounded-xl border border-gray-100 object-cover sm:h-24 sm:w-24"
-                                  />
-                                ) : (
-                                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-3xl sm:h-24 sm:w-24">
-                                    🍱
-                                  </div>
-                                )}
 
+                                {/* Food image */}
+                                <OrderItemImage item={item} />
+
+                                {/* Item information */}
                                 <div className="min-w-0 flex-1">
+
                                   <h4 className="font-bold text-gray-900">
                                     {getItemName(item)}
                                   </h4>
@@ -606,32 +734,45 @@ function MyOrder() {
                                   <p className="mt-2 font-extrabold text-orange-600">
                                     {getItemSubtotal(item)}
                                   </p>
+
                                 </div>
+
                               </div>
+
                             );
+
                           })}
+
                         </div>
+
                       ) : (
+
                         <div className="rounded-2xl bg-gray-50 p-5 text-sm text-gray-500">
                           Item details are not available for this order.
                         </div>
+
                       )}
+
                     </section>
 
                     {/* Payment and delivery */}
                     <section className="space-y-5">
+
                       {/* Payment */}
                       <div>
+
                         <h3 className="mb-3 text-lg font-extrabold text-gray-900">
                           Payment Details
                         </h3>
 
                         <div className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+
                           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
                             <CreditCard size={21} />
                           </div>
 
                           <div>
+
                             <p className="text-xs font-medium text-gray-500">
                               Payment Status
                             </p>
@@ -639,17 +780,22 @@ function MyOrder() {
                             <p className="mt-1 font-bold text-gray-800">
                               {formatStatus(getPaymentStatus(order))}
                             </p>
+
                           </div>
+
                         </div>
+
                       </div>
 
-                      {/* Address */}
+                      {/* Delivery address */}
                       <div>
+
                         <h3 className="mb-3 text-lg font-extrabold text-gray-900">
                           Delivery Address
                         </h3>
 
                         <div className="flex items-start gap-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+
                           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
                             <MapPin size={21} />
                           </div>
@@ -657,12 +803,16 @@ function MyOrder() {
                           <p className="pt-1 text-sm leading-6 text-gray-600">
                             {getAddress(order)}
                           </p>
+
                         </div>
+
                       </div>
 
-                      {/* Total */}
+                      {/* Order total */}
                       <div className="rounded-2xl bg-orange-50 p-5">
+
                         <div className="flex items-center justify-between gap-3">
+
                           <span className="font-bold text-gray-700">
                             Order Total
                           </span>
@@ -670,31 +820,46 @@ function MyOrder() {
                           <span className="text-2xl font-extrabold text-orange-600">
                             {total ?? "Not available"}
                           </span>
+
                         </div>
+
                       </div>
 
-                      {/* Cancel button */}
+                      {/* Cancel order */}
                       {canCancel && (
-                        <button type="button" onClick={() => cancelOrder(order)} disabled={cancelLoading === orderId}
+
+                        <button
+                          type="button"
+                          onClick={() => cancelOrder(order)}
+                          disabled={cancelLoading === orderId}
                           className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-5 py-3 font-bold text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
                         >
+
                           {cancelLoading === orderId ? (
+
                             <>
                               <RefreshCw size={17} className="animate-spin" />
                               Cancelling Order...
                             </>
+
                           ) : (
+
                             <>
                               <XCircle size={17} />
                               Cancel Order
                             </>
+
                           )}
+
                         </button>
+
                       )}
 
                       {/* Non-cancellable orders */}
                       {!canCancel && (
+
                         <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 text-sm font-medium text-gray-500">
+
                           {normalizedStatus.includes("cancel") ? (
                             <XCircle size={17} />
                           ) : (
@@ -704,28 +869,44 @@ function MyOrder() {
                           {normalizedStatus.includes("cancel")
                             ? "This order has been cancelled."
                             : "This order can no longer be cancelled."}
+
                         </div>
+
                       )}
+
                     </section>
+
                   </div>
+
                 </article>
+
               );
+
             })}
+
           </div>
+
         )}
 
         {/* Bottom button */}
         {!loading && orders.length > 0 && (
+
           <div className="mt-8 text-center">
-            <Link  to="/menu"
+
+            <Link
+              to="/menu"
               className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-6 py-3 font-bold text-white shadow-sm transition hover:bg-orange-600"
             >
               <Utensils size={18} />
               Order More Tiffin
             </Link>
+
           </div>
+
         )}
+
       </div>
+
     </div>
   );
 }
